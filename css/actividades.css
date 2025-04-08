@@ -1,0 +1,59 @@
+.card {
+    width: 90%;
+    margin: 4% auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: center;
+}
+
+.categoria {
+    padding: 20px;
+}
+
+.subtitulo {
+    border-bottom: solid black 1px;
+    width: 25%;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.btns a {
+    text-align: center;
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: black;
+    color: black;
+    background-color: rgb(0, 0, 0, 0.1);
+    font-size: 15px;
+    padding: 15px;
+    width: 300px;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+}
+
+.btns a:hover {
+    background-color: rgb(0, 0, 0, 0.2);
+}
+
+.fotos-actividad {
+    display: flex;
+    padding-top: 30px;
+}
+
+.fotos-actividad img {
+    padding: 10px;
+}
+
+.fotos-actividad img:hover {
+    cursor: pointer;
+}

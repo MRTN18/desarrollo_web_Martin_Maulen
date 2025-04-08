@@ -1,0 +1,60 @@
+.card {
+    width: 90%;
+    margin: 4% auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: center;
+}
+
+.table {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.table table {
+    width: 1800px;
+    padding: 10px;
+}
+
+.table table th {
+    border: 1px solid black;
+    padding: 10px;
+    width: 300px;
+}
+
+.table table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+.dato:hover {
+    background-color: rgb(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.btn a {
+    padding: 15px 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: black;
+    background-color: rgb(0, 0, 0, 0.1);
+    color: black;
+    outline: none;
+    text-decoration: none;
+}
+
+.btn a:hover {
+    background-color: rgb(0, 0, 0, 0.2);
+}
