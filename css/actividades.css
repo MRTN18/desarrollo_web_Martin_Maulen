@@ -48,10 +48,14 @@
 .fotos-actividad {
     display: flex;
     padding-top: 30px;
+    gap: 20px;
 }
 
 .fotos-actividad img {
-    padding: 10px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0, 0.1);
 }
 
 .fotos-actividad img:hover {
