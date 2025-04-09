@@ -1,16 +1,18 @@
 const horaInicio = document.getElementById("inicio");
 const horaTermino = document.getElementById("termino");
 
-const now = new Date();
-const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, "0");
-const day = String(now.getDate()).padStart(2, "0");
-const hours = String(now.getHours()).padStart(2, "0");
-const minutes = String(now.getMinutes()).padStart(2, "0");
-const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+const ahora = new Date();
+const anno = ahora.getFullYear();
+const mes = String(ahora.getMonth() + 1).padStart(2, "0");
+const dia = String(ahora.getDate()).padStart(2, "0");
+const horasInicio = String(ahora.getHours()).padStart(2, "0");
+const horasFinal = String((ahora.getHours() + 3) % 24).padStart(2, "0");
+const minutes = String(ahora.getMinutes()).padStart(2, "0");
+const fechaInicioFormateada = `${anno}-${mes}-${dia}T${horasInicio}:${minutes}`;
+const fechaTerminoFormateada = `${anno}-${mes}-${dia}T${horasFinal}:${minutes}`;
 
-horaInicio.value = formattedDate;
-horaTermino.value = formattedDate;
+horaInicio.value = fechaInicioFormateada;
+horaTermino.value = fechaTerminoFormateada;
 
 const region = document.getElementById("region");
 const comuna = document.getElementById("comuna");
@@ -237,7 +239,7 @@ const formatearNumero = (numero) => {
 const validarTelefono = () => {
   const telefonoRegex = /^\+\d{3}\.\d{8}$/;
   const nuevoNumero = formatearNumero(celular.value);
-  if (!telefonoRegex.test(nuevoNumero)) {
+  if (nuevoNumero != "" && !telefonoRegex.test(nuevoNumero)) {
     celular.style.borderColor = "red";
     celular.style.borderRadius = "2px";
     errorCelular.style.display = "block";
@@ -254,7 +256,7 @@ const validarTelefono = () => {
 };
 
 const validarFechas = () => {
-  if (horaInicio.value > horaTermino.value) {
+  if (horaInicio.value >= horaTermino.value) {
     horaInicio.style.borderColor = "red";
     horaInicio.style.borderRadius = "2px";
     errorFecha.style.display = "block";
