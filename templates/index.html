@@ -28,86 +28,16 @@
             <th>Tema</th>
             <th>Foto</th>
           </tr>
+          {% for data in data %}
           <tr>
-            <td>
-              2025-03-28 <br />
-              12:00
-            </td>
-            <td>
-              2025-03-28 <br />
-              14:00
-            </td>
-            <td>Providencia</td>
-            <td>Plaza</td>
-            <td>Escuela de Boxeo</td>
-            <td>
-              <img src="/image/index-foto1.jpeg" width="200" height="200" />
-            </td>
+            <td>{{ data["dia_hora_inicio"] }}</td>
+            <td>{{ data["dia_hora_termino"] }}</td>
+            <td>{{ data["comuna"] }}</td>
+            <td>{{ data["sector"] }}</td>
+            <td>{{ data["descripcion"] }}</td>
+            <td>Hola</td>
           </tr>
-          <tr>
-            <td>
-              2025-03-29 <br />
-              19:00
-            </td>
-            <td>
-              2025-03-28 <br />
-              14:00
-            </td>
-            <td>Santiago</td>
-            <td>Beauchef 851</td>
-            <td>Como pasar Intro al Algebra</td>
-            <td>
-              <img src="/image/index-foto2.jpeg" width="200" height="200" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              2022-03-30 <br />
-              18:00
-            </td>
-            <td>
-              2025-03-30 <br />
-              20:00
-            </td>
-            <td>Las Condes</td>
-            <td>Cancha de golf</td>
-            <td>Clases de golf</td>
-            <td>
-              <img src="/image/index-foto3.jpg" width="200" height="200" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              2025-03-28 <br />
-              12:00
-            </td>
-            <td>
-              2025-03-28 <br />
-              14:00
-            </td>
-            <td>Santiago</td>
-            <td>Plaza de Armas</td>
-            <td>Clases de Fútbol</td>
-            <td>
-              <img src="/image/index-foto4.jpg" width="200" height="200" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              2025-03-28 <br />
-              12:00
-            </td>
-            <td>
-              2025-03-28 <br />
-              14:00
-            </td>
-            <td>Peñalolen</td>
-            <td>Plaza</td>
-            <td>Como Ganar Plata</td>
-            <td>
-              <img src="/image/index-foto5.png" width="200" height="200" />
-            </td>
-          </tr>
+          {% endfor %}
         </table>
       </div>
     </div>

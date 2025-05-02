@@ -23,13 +23,16 @@ class Region(Base):
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     nombre = Column(String(200), nullable=False)
 
+    comunas = relationship("Comuna", back_populates="region")
+
 class Comuna(Base):
     __tablename__ = "comuna"
 
+    region_id = Column(Integer, ForeignKey('region.id'), nullable=False)
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     nombre = Column(String(200), nullable=False)
-    id_region = Column(Integer, ForeignKey('region.id'), nullable=False)
 
+    actividades = relationship("Actividad", back_populates="comuna")
     region = relationship("Region", back_populates="comunas")
 
 class Actividad(Base):
@@ -82,3 +85,22 @@ class ActividadTema(Base):
 
     actividad = relationship("Actividad", back_populates="temas")
 
+# --- Consultas ---
+
+def get_regiones():
+    session = SessionLocal()
+    regions = session.query(Region).all()
+    session.close()
+    return regions
+
+def get_actividades():
+    session = SessionLocal()
+    actividades = session.query(Actividad).all()
+    session.close()
+    return actividades
+
+def get_comuna_by_id(id):
+    session = SessionLocal()
+    comuna = session.query(Comuna).filter(Comuna.id == id).first()
+    session.close()
+    return comuna
