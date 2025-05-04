@@ -104,3 +104,21 @@ def get_comuna_by_id(id):
     comuna = session.query(Comuna).filter(Comuna.id == id).first()
     session.close()
     return comuna
+
+def get_actividad_by_id(id):
+    session = SessionLocal()
+    actividad = session.query(Actividad).filter(Actividad.id == id).first()
+    session.close()
+    return actividad
+
+def get_tema_by_actividad_id(id):
+    session = SessionLocal()
+    tema = session.query(ActividadTema).filter(ActividadTema.actividad_id == id).first()
+    session.close()
+    return tema
+
+def get_foto_by_actividad_id(id):
+    session = SessionLocal()
+    foto = session.query(Foto).filter(Foto.actividad_id == id).first()
+    session.close()
+    return foto

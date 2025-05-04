@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="card">
-      <form>
+      <form method="post" id="formulario">
         <div class="titulo">
           <h1>Agregar Actividad</h1>
         </div>
@@ -27,7 +27,6 @@
               required
             >
               <option value="--">--</option>
-              <!-- Las opciones serán generadas dinámicamente desde el archivo JSON -->
             </select>
             <span class="error" id="errorRegion"></span>
           </div>
@@ -185,23 +184,13 @@
           </div>
           <div class="agregarActividad">
             <button type="button" id="btnVolver">Volver al inicio</button>
-            <button type="button" onclick="validate()">
+            <button type="button" onclick="validate()" type="submit">
               Agregar Actividad
             </button>
           </div>
         </div>
       </form>
     </div>
-    <div id="modalConfirmacion" class="modal">
-      <div class="modal-contenido">
-        <h2>Confirmación</h2>
-        <p>¿Estás seguro de que deseas agregar esta actividad?</p>
-        <div class="modal-botones">
-          <button id="confirmarActividad" class="btn-confirmar">Sí</button>
-          <button id="cancelarActividad" class="btn-cancelar">No</button>
-        </div>
-      </div>
-    </div>
   </body>
-  <script src="/js/agregar-actividad.js"></script>
+  <script src="{{ url_for('static', filename='js/agregar-actividad.js') }}"></script>
 </html>

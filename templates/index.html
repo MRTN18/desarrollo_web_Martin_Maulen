@@ -34,8 +34,14 @@
             <td>{{ data["dia_hora_termino"] }}</td>
             <td>{{ data["comuna"] }}</td>
             <td>{{ data["sector"] }}</td>
-            <td>{{ data["descripcion"] }}</td>
-            <td>Hola</td>
+            <td>{{ data["tema"] }}</td>
+            <td>
+              <img
+                src="{{ url_for('static', filename=data['foto']) }}"
+                width="200"
+                height="160"
+              />
+            </td>
           </tr>
           {% endfor %}
         </table>
