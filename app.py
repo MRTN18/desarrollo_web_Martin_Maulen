@@ -38,22 +38,9 @@ def agregar_actividad():
         foto = request.form.get('foto')
         tema = request.form.get('tema')
         otroTema = request.form.get('inputOtroTema')
-        data = {
-            'region': region,
-            'comuna': comuna,
-            'dia_hora_inicio': dia_hora_inicio,
-            'dia_hora_termino': dia_hora_termino,
-            'sector': sector,
-            'foto': foto,
-            'celular': celular,
-            'descripcion': descripcion,
-            'nombre': nombre,
-            'email': email,
-            'red_social': red_social,
-            'tema': tema,
-            'otroTema': otroTema
-        }
-        print(data)
+        db.create_actividad(comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion)
+        db.create_foto(foto, tema, otroTema)
+        db.create_actividad_tema(tema, otroTema, db.get)
         return redirect(url_for('index'))
     elif request.method == 'GET':
         return render_template('agregar-actividad.html')

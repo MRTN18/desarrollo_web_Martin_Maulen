@@ -122,3 +122,41 @@ def get_foto_by_actividad_id(id):
     foto = session.query(Foto).filter(Foto.actividad_id == id).first()
     session.close()
     return foto
+
+def create_actividad(comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
+    session = SessionLocal()
+    new_actividad = Actividad(
+        comuna_id=comuna,
+        sector=sector,
+        nombre=nombre,
+        email=email,
+        celular=celular,
+        dia_hora_inicio=dia_hora_inicio,
+        dia_hora_termino=dia_hora_termino,
+        descripcion=descripcion
+    )
+    session.add(new_actividad)
+    session.commit()
+    session.close()
+
+def create_foto(ruta_archivo, nombre_archivo, actividad_id):
+    session = SessionLocal()
+    new_foto = Foto(
+        ruta_archivo=ruta_archivo,
+        nombre_archivo=nombre_archivo,
+        actividad_id=actividad_id
+    )
+    session.add(new_foto)
+    session.commit()
+    session.close()
+
+def create_actividad_tema(tema, glosa_otro, actividad_id):
+    session = SessionLocal()
+    new_actividad_tema = ActividadTema(
+        tema=tema,
+        glosa_otro=glosa_otro,
+        actividad_id=actividad_id
+    )
+    session.add(new_actividad_tema)
+    session.commit()
+    session.close()
