@@ -520,10 +520,14 @@ region.addEventListener("change", () => {
   }
 });
 
+botonVolver.addEventListener("click", () => {
+  window.location.href = "/";
+});
+
 botonAgregarFoto.addEventListener("click", () => {
   const nuevoInput = document.createElement("input");
   nuevoInput.type = "file";
-  nuevoInput.name = "foto" + fotos.childElementCount;
+  nuevoInput.name = "foto" + (fotos.childElementCount + 1);
   nuevoInput.onchange = validarFoto;
   fotos.appendChild(nuevoInput);
   inputFotos = document.querySelectorAll('input[type="file"]');
@@ -531,6 +535,20 @@ botonAgregarFoto.addEventListener("click", () => {
     botonAgregarFoto.disabled = true;
   }
 });
+
+function OtroTema() {
+  const tema = document.getElementById("tema").value;
+  const otroTemaDiv = document.getElementById("otroTema");
+  const inputOtroTema = document.getElementById("inputOtroTema");
+  if (tema === "otro") {
+    otroTemaDiv.style.display = "block";
+    inputOtroTema.required = true;
+  } else {
+    otroTemaDiv.style.display = "none";
+    inputOtroTema.required = false;
+    inputOtroTema.value = ""; // Limpia el valor si no es necesario
+  }
+}
 
 const validarRegion = () => {
   if (region.value === "--") {

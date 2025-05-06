@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="card">
-      <form method="post" id="formulario">
+      <form method="post" id="formulario" enctype="multipart/form-data">
         <div class="titulo">
           <h1>Agregar Actividad</h1>
         </div>
@@ -98,9 +98,21 @@
               sociales)</label
             >
             <div class="redes-sociales">
-              <img src="/image/instagram.png" width="20" height="20" />
-              <img src="/image/whatsapp.png" width="20" height="20" />
-              <img src="/image/X.png" width="20" height="20" />
+              <img
+                src="{{ url_for('static', filename='image/instagram.png') }}"
+                width="20"
+                height="20"
+              />
+              <img
+                src="{{ url_for('static', filename='image/whatsapp.png') }}"
+                width="20"
+                height="20"
+              />
+              <img
+                src="{{ url_for('static', filename='image/X.png') }}"
+                width="20"
+                height="20"
+              />
             </div>
             <input
               type="text"
@@ -146,7 +158,7 @@
           </div>
           <div class="input">
             <label for="tema">Tema*</label>
-            <select name="tema" id="tema" onchange="validarTema()">
+            <select name="tema" id="tema" onchange="validarTema(); OtroTema()">
               <option value="--">--</option>
               <option value="musica">Música</option>
               <option value="deporte">Deporte</option>
@@ -160,16 +172,14 @@
               <option value="otro">Otro</option>
             </select>
             <span class="error" id="errorTema"></span>
-            <div id="otroTema">
+            <div id="otroTema" style="display: none">
               <span>Ingresa el nuevo tema</span>
               <input
                 type="text"
-                name="otroTema"
+                name="inputOtroTema"
                 id="inputOtroTema"
-                onchange="validarOtroTema()"
                 minlength="3"
                 maxlength="15"
-                required
               />
               <span class="error" id="errorOtro"></span>
             </div>
@@ -177,7 +187,7 @@
           <div class="input">
             <label for="fotos">Foto*</label>
             <div class="fotos" id="fotos">
-              <input type="file" name="foto" onchange="validarFoto()" />
+              <input type="file" name="foto1" onchange="validarFoto()" />
             </div>
             <span class="error" id="errorFoto"></span>
             <button type="button" id="otraFoto">Agregar otra foto</button>
