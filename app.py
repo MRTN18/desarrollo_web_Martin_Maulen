@@ -87,7 +87,7 @@ def agregar_actividad():
             glosa_otro=otroTema if tema == 'otro' else None,
             actividad_id=actividad.id
         )
-        return redirect(url_for('index'))
+        return redirect(url_for('confirmacion'))
     elif request.method == 'GET':
         return render_template('agregar-actividad.html')
 
@@ -115,6 +115,10 @@ def actividades():
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
+
+@app.route('/confirmacion')
+def confirmacion():
+    return render_template('confirmacion-agregar-tarea.html')
 
 @app.route('/actividades/<int:id>', methods=['GET'])
 def actividad(id):
