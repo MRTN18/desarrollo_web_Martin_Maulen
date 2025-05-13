@@ -89,9 +89,9 @@ class ActividadTema(Base):
 
 def get_regiones():
     session = SessionLocal()
-    regions = session.query(Region).all()
+    regiones = session.query(Region).all()
     session.close()
-    return regions
+    return regiones
 
 def get_actividades():
     session = SessionLocal()
@@ -117,11 +117,11 @@ def get_tema_by_actividad_id(id):
     session.close()
     return tema
 
-def get_foto_by_actividad_id(id):
+def get_fotos_by_actividad_id(id):
     session = SessionLocal()
-    foto = session.query(Foto).filter(Foto.actividad_id == id).first()
+    fotos = session.query(Foto).filter(Foto.actividad_id == id).all()
     session.close()
-    return foto
+    return fotos
 
 def create_actividad(comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
     session = SessionLocal()
@@ -158,5 +158,16 @@ def create_actividad_tema(tema, glosa_otro, actividad_id):
         actividad_id=actividad_id
     )
     session.add(new_actividad_tema)
+    session.commit()
+    session.close()
+
+def create_contactar_por(nombre, identificador, actividad_id):
+    session = SessionLocal()
+    new_contactar_por = ContactarPor(
+        nombre=nombre,
+        identificador=identificador,
+        actividad_id=actividad_id
+    )
+    session.add(new_contactar_por)
     session.commit()
     session.close()

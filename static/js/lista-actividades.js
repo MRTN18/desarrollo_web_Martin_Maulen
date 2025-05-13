@@ -4,8 +4,8 @@ const row3 = document.getElementById("row3");
 const row4 = document.getElementById("row4");
 const row5 = document.getElementById("row5");
 
-const redirect = (actividad) => {
-  window.location.href = `/html/actividad${actividad}.html`;
+const redirect = (actividad_id) => {
+  window.location.href = `actividades/${actividad_id}`;
 };
 
 const mouseEnter = (row) => {

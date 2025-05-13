@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Portada</title>
+    <title>Bienvenido</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
@@ -30,8 +30,14 @@
           </tr>
           {% for data in data %}
           <tr>
-            <td>{{ data["dia_hora_inicio"] }}</td>
-            <td>{{ data["dia_hora_termino"] }}</td>
+            <td>
+              {{ data["fecha_inicio"] }} <br />
+              {{ data["hora_inicio"] }}
+            </td>
+            <td>
+              {{ data["fecha_termino"] }} <br />
+              {{ data["hora_termino"] }}
+            </td>
             <td>{{ data["comuna"] }}</td>
             <td>{{ data["sector"] }}</td>
             <td>{{ data["tema"] }}</td>

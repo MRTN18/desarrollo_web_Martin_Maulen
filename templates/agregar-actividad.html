@@ -98,21 +98,43 @@
               sociales)</label
             >
             <div class="redes-sociales">
-              <img
-                src="{{ url_for('static', filename='image/instagram.png') }}"
-                width="20"
-                height="20"
-              />
-              <img
-                src="{{ url_for('static', filename='image/whatsapp.png') }}"
-                width="20"
-                height="20"
-              />
-              <img
-                src="{{ url_for('static', filename='image/X.png') }}"
-                width="20"
-                height="20"
-              />
+              <div>
+                <input
+                  type="checkbox"
+                  id="instagram"
+                  name="red-social"
+                  value="instagram"
+                />
+                <img
+                  src="{{ url_for('static', filename='image/instagram.png') }}"
+                  width="20"
+                  height="20"
+                  for="instagram"
+                />
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="whatsapp"
+                  name="red-social"
+                  value="whatsapp"
+                />
+                <img
+                  src="{{ url_for('static', filename='image/whatsapp.png') }}"
+                  width="20"
+                  height="20"
+                  for="whatsapp"
+                />
+              </div>
+              <div>
+                <input type="checkbox" id="X" name="red-social" value="X" />
+                <img
+                  src="{{ url_for('static', filename='image/X.png') }}"
+                  width="20"
+                  height="20"
+                  for="X"
+                />
+              </div>
             </div>
             <input
               type="text"
