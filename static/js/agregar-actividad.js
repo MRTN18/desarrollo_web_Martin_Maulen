@@ -536,12 +536,6 @@ botonAgregarFoto.addEventListener("click", () => {
   }
 });
 
-document
-  .querySelector("button[onclick='validate()']")
-  .addEventListener("click", function () {
-    document.getElementById("modalConfirmacion").style.display = "flex";
-  });
-
 // Cancelar el envío y cerrar el modal
 document.getElementById("btnCancelar").addEventListener("click", function () {
   document.getElementById("modalConfirmacion").style.display = "none";
@@ -562,7 +556,7 @@ function OtroTema() {
   } else {
     otroTemaDiv.style.display = "none";
     inputOtroTema.required = false;
-    inputOtroTema.value = ""; // Limpia el valor si no es necesario
+    inputOtroTema.value = "";
   }
 }
 
@@ -848,6 +842,6 @@ const validate = () => {
     redSocial &&
     sector
   ) {
-    true;
+    document.getElementById("modalConfirmacion").style.display = "flex";
   }
 };
