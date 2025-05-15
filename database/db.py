@@ -123,6 +123,12 @@ def get_fotos_by_actividad_id(id):
     session.close()
     return fotos
 
+def get_redes_sociales_by_actividad_id(id):
+    session = SessionLocal()
+    redes_sociales = session.query(ContactarPor).filter(ContactarPor.actividad_id == id).all()
+    session.close()
+    return redes_sociales
+
 def create_actividad(comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
     session = SessionLocal()
     new_actividad = Actividad(

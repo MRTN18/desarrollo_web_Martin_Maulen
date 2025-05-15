@@ -61,3 +61,8 @@
 .fotos-actividad img:hover {
     cursor: pointer;
 }
+
+.red-social {
+    display: flex;
+    padding-top: 15px;
+}

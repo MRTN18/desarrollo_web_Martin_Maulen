@@ -10,9 +10,6 @@
   </head>
   <body>
     <div class="card">
-      <div class="titulo">
-        <h1>{{ data['nombre'] }}</h1>
-      </div>
       <div class="categoria">
         <div class="subtitulo">
           <h2>Fecha y hora de Inicio</h2>
@@ -46,6 +43,38 @@
           <h2>Tema</h2>
         </div>
         <p>{{ data['tema'] }}</p>
+      </div>
+      <div class="categoria">
+        <div class="subtitulo">
+          <h2>Datos del organizador</h2>
+        </div>
+        <p>
+          Nombre: {{ data['nombre'] }} <br />
+          Correo: {{ data['email'] }} <br />
+          Teléfono: {{ data['celular'] }} <br />
+        </p>
+      </div>
+      <div class="categoria">
+        <div class="subtitulo">
+          <h2>Contactar Por</h2>
+        </div>
+        {% for data in data['redes_sociales'] %}
+        <div class="red-social">
+          {% if data.nombre == 'instagram' %}
+          <img src="{{ url_for('static', filename='image/instagram.png') }}" alt="instagram" width="20" height="20">
+          {% elif data.nombre == 'whatsapp' %}
+          <img src="{{ url_for('static', filename='image/whatsapp.png') }}" alt="whatsapp" width="20" height="20">
+          {% elif data.nombre == 'X' %}
+          <img src="{{ url_for('static', filename='image/X.png') }}" alt="X" width="20" height="20">
+          {% elif data.nombre == 'telegram' %}
+          <img src="{{ url_for('static', filename='image/telegram.png') }}" alt="telegram" width="20" height="20">
+          {% elif data.nombre == 'tiktok' %}
+          <img src="{{ url_for('static', filename='image/tiktok.png') }}" alt="tiktok" width="20" height="20">
+          {% endif %}
+          <p>{{ data.identificador }}</p>
+        </div>
+        {% endfor %}
+      </div>
       </div>
       <div class="categoria">
         <div class="subtitulo">

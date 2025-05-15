@@ -124,14 +124,6 @@ def actividades():
             })
         return render_template('lista-actividades.html', data=data)
 
-@app.route('/estadisticas')
-def estadisticas():
-    return render_template('estadisticas.html')
-
-@app.route('/confirmacion')
-def confirmacion():
-    return render_template('confirmacion-agregar-tarea.html')
-
 @app.route('/actividades/<int:id>', methods=['GET'])
 def actividad(id):
     if request.method == 'GET':
@@ -139,6 +131,7 @@ def actividad(id):
         comuna = db.get_comuna_by_id(actividad.comuna_id)
         tema = db.get_tema_by_actividad_id(id)
         fotos = db.get_fotos_by_actividad_id(id)
+        redes = db.get_redes_sociales_by_actividad_id(id)
         rutas_fotos = []
         for i in fotos:
             rutas_fotos.append(i.ruta_archivo)
@@ -149,12 +142,23 @@ def actividad(id):
             'fecha_termino': actividad.dia_hora_termino.date(),
             'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M'),
             'nombre': actividad.nombre,
+            'email': actividad.email,
+            'celular': actividad.celular,
+            'redes_sociales': redes,
             'comuna': comuna.nombre,
             'descripcion': actividad.descripcion,
             'tema': tema.tema if tema.tema != 'otro' else tema.glosa_otro,
             'fotos': rutas_fotos,
         }
         return render_template('actividad.html', data=data)
+
+@app.route('/estadisticas')
+def estadisticas():
+    return render_template('estadisticas.html')
+
+@app.route('/confirmacion')
+def confirmacion():
+    return render_template('confirmacion-agregar-tarea.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
