@@ -2,11 +2,11 @@
 <html lang="es">
   <head>
     <title>Lista de Actividades</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/lista-actividades.css') }}"
-    />
+    >
   </head>
   <body>
     <div class="card">
@@ -14,13 +14,14 @@
         <h1>Listado de Actividades</h1>
       </div>
       <div class="table">
-        <table>
+        <table id="tabla-actividades">
           <tr>
             <th>Inicio</th>
             <th>Termino</th>
             <th>Comuna</th>
             <th>Sector</th>
             <th>Tema</th>
+            <th>Nombre del Organizador</th>
             <th>Total fotos</th>
           </tr>
           {% for data in data %}
@@ -39,12 +40,14 @@
             </td>
             <td>{{ data['comuna'] }}</td>
             <td>{{ data['sector'] }}</td>
+            <td>{{ data['tema'] }}</td>
             <td>{{ data['nombre'] }}</td>
             <td>{{ data['fotos'] }}</td>
           </tr>
           {% endfor %}
         </table>
       </div>
+      <div id="pagination" class="pagination"></div>
       <div class="btn">
         <a href="{{ url_for('index') }}">Volver al inicio</a>
       </div>

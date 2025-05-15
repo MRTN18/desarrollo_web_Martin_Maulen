@@ -2,11 +2,11 @@
 <html lang="es">
   <head>
     <title>{{ data["nombre"] }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/actividades.css') }}"
-    />
+    >
   </head>
   <body>
     <div class="card">
@@ -58,7 +58,7 @@
             alt="foto"
             width="320"
             height="240"
-          />
+          >
           {% endfor %}
         </div>
       </div>
@@ -69,6 +69,6 @@
         <a href="{{ url_for('index') }}">Volver al Inicio</a>
       </div>
     </div>
+    <script src="{{ url_for('static', filename='js/actividades.js') }}"></script>
   </body>
-  <script src="{{ url_for('static', filename='js/actividades.js') }}"></script>
 </html>

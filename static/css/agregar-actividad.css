@@ -46,9 +46,14 @@
 
 .redes-sociales {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.redes-sociales div {
+    padding: 2px;
 }
 
 .modal {

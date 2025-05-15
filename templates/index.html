@@ -2,11 +2,11 @@
 <html lang="es">
   <head>
     <title>Bienvenido</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
-    />
+    >
   </head>
   <body>
     <div class="card">
@@ -46,7 +46,8 @@
                 src="{{ url_for('static', filename=data['foto']) }}"
                 width="200"
                 height="160"
-              />
+                alt="Foto de la actividad"
+              >
             </td>
           </tr>
           {% endfor %}

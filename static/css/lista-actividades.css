@@ -58,3 +58,26 @@
 .btn a:hover {
     background-color: rgb(0, 0, 0, 0.2);
 }
+
+.pagination {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+  
+  .pagination button:hover {
+    background-color: #ddd;
+  }

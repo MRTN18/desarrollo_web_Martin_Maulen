@@ -492,6 +492,17 @@ const botonVolver = document.getElementById("btnVolver");
 let inputFotos = document.querySelectorAll('input[type="file"]');
 const form = document.getElementById("formulario");
 
+const instagram_checkbox = document.getElementById("instagram");
+const whatsapp_checkbox = document.getElementById("whatsapp");
+const X_checkbox = document.getElementById("X");
+const telegram_checkbox = document.getElementById("telegram");
+const tiktok_checkbox = document.getElementById("tiktok");
+const instagram_input = document.getElementById("instagramID");
+const whatsapp_input = document.getElementById("whatsappID");
+const X_input = document.getElementById("XID");
+const telegram_input = document.getElementById("telegramID");
+const tiktok_input = document.getElementById("tiktokID");
+
 region_comuna.regiones.forEach((regionData) => {
   const option = document.createElement("option");
   option.value = regionData.numero;
@@ -499,13 +510,68 @@ region_comuna.regiones.forEach((regionData) => {
   region.appendChild(option);
 });
 
+instagram_checkbox.addEventListener("change", () => {
+  if (instagram_checkbox.checked) {
+    instagram_input.style.display = "block";
+    instagram_input.required = true;
+  } else {
+    instagram_input.style.display = "none";
+    instagram_input.required = false;
+    instagram_input.value = "";
+  }
+});
+
+whatsapp_checkbox.addEventListener("change", () => {
+  if (whatsapp_checkbox.checked) {
+    whatsapp_input.style.display = "block";
+    whatsapp_input.required = true;
+  } else {
+    whatsapp_input.style.display = "none";
+    whatsapp_input.required = false;
+    whatsapp_input.value = "";
+  }
+});
+
+X_checkbox.addEventListener("change", () => {
+  if (X_checkbox.checked) {
+    X_input.style.display = "block";
+    X_input.required = true;
+  } else {
+    X_input.style.display = "none";
+    X_input.required = false;
+    X_checkbox.value = "";
+  }
+});
+
+telegram_checkbox.addEventListener("change", () => {
+  if (telegram_checkbox.checked) {
+    telegram_input.style.display = "block";
+    telegram_input.required = true;
+  } else {
+    telegram_input.style.display = "none";
+    telegram_input.required = false;
+    telegram_checkbox.value = "";
+  }
+});
+
+tiktok_checkbox.addEventListener("change", () => {
+  if (tiktok_checkbox.checked) {
+    tiktok_input.style.display = "block";
+    tiktok_input.required = true;
+  } else {
+    tiktok_input.style.display = "none";
+    tiktok_input.required = false;
+    tiktok_checkbox.value = "";
+  }
+});
+
 region.addEventListener("change", () => {
-  if (region.value === "--") {
+  if (region.value === "") {
     comuna.disabled = true;
-    comuna.innerHTML = '<option value="--">--</option>';
+    comuna.innerHTML = '<option value="">--</option>';
   } else {
     const regionSeleccionada = region.value;
-    comuna.innerHTML = '<option value="--">--</option>';
+    comuna.innerHTML = '<option value="">--</option>';
     region_comuna.regiones.forEach((regionData) => {
       if (regionSeleccionada == regionData.numero) {
         regionData.comunas.forEach((comunaData) => {
@@ -561,7 +627,7 @@ function OtroTema() {
 }
 
 const validarRegion = () => {
-  if (region.value === "--") {
+  if (region.value === "") {
     region.style.borderColor = "red";
     region.style.borderRadius = "2px";
     errorRegion.style.display = "block";
@@ -578,7 +644,7 @@ const validarRegion = () => {
 };
 
 const validarComuna = () => {
-  if (comuna.value === "--") {
+  if (comuna.value === "") {
     comuna.style.borderColor = "red";
     comuna.style.borderRadius = "2px";
     errorComuna.style.display = "block";
@@ -723,12 +789,33 @@ const validarFechas = () => {
 
 const validarRedSocial = () => {
   if (
-    contactarPor.value != "" &&
-    (contactarPor.value.length < 4 || contactarPor.value.length > 50)
+    (instagram_checkbox.checked && instagram_input.value == "") ||
+    (whatsapp_checkbox.checked && whatsapp_input.value == "") ||
+    (X_checkbox.checked && X_input.value == "") ||
+    (telegram_checkbox.checked && telegram_input.value == "") ||
+    (tiktok_checkbox.checked && tiktok_input.value == "")
+  ) {
+    errorRedSocial.style.display = "block";
+    errorRedSocial.innerText = "¡Debes ingresar un ID de red social!";
+    errorRedSocial.style.color = "red";
+    return false;
+  } else if (
+    (instagram_checkbox.checked &&
+      (instagram_input.value.length < 4 ||
+        instagram_input.value.length > 50)) ||
+    (whatsapp_checkbox.checked &&
+      (whatsapp_input.value.length < 4 || whatsapp_input.value.length > 50)) ||
+    (X_checkbox.checked &&
+      (X_input.value.length < 4 || X_input.value.length > 50)) ||
+    (telegram_checkbox.checked &&
+      (telegram_input.value.length < 4 ||
+        telegram_input.value.length > 50)) ||
+    (tiktok_checkbox.checked &&
+      (tiktok_input.value.length < 4 || tiktok_input.value.length > 50))
   ) {
     errorRedSocial.style.display = "block";
     errorRedSocial.innerText =
-      "¡El ID o URL debe tener como mínimo 4 caracteres y como máximo 50!";
+      "¡El ID de red social debe tener como mínimo 4 caracteres y como máximo 50!";
     errorRedSocial.style.color = "red";
     return false;
   } else {

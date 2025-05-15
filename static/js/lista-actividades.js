@@ -16,3 +16,45 @@ const mouseEnter = (row) => {
 const mouseLeave = (row) => {
   row.style.background = "white";
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+  const rowsPerPage = 5; // Número de filas por página
+  const table = document.getElementById("tabla-actividades");
+  const rows = Array.from(table.querySelectorAll("tr.dato"));
+  const pagination = document.getElementById("pagination");
+
+  function displayPage(page) {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    rows.forEach((row, index) => {
+      row.style.display = index >= start && index < end ? "" : "none";
+    });
+  }
+
+  function setupPagination() {
+    const pageCount = Math.ceil(rows.length / rowsPerPage);
+    pagination.innerHTML = "";
+
+    for (let i = 1; i <= pageCount; i++) {
+      const button = document.createElement("button");
+      button.textContent = i;
+      button.classList.add("page-btn");
+      button.addEventListener("click", () => {
+        displayPage(i);
+        document.querySelectorAll(".page-btn").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+      });
+      pagination.appendChild(button);
+    }
+
+    // Marca el primer botón como activo por defecto
+    if (pagination.firstChild) {
+      pagination.firstChild.classList.add("active");
+    }
+  }
+
+  // Inicializa la tabla y la paginación
+  displayPage(1);
+  setupPagination();
+});

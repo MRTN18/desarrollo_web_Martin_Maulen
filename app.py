@@ -22,13 +22,14 @@ def index():
         for actividad in actividades:
             comuna = db.get_comuna_by_id(actividad.comuna_id)
             foto = db.get_fotos_by_actividad_id(actividad.id)[0]
+            tema = db.get_tema_by_actividad_id(actividad.id)
             data.append({
                 'sector': actividad.sector,
                 'fecha_inicio': actividad.dia_hora_inicio.date(),
                 'hora_inicio': actividad.dia_hora_inicio.time().strftime('%H:%M'),
                 'fecha_termino': actividad.dia_hora_termino.date(),
                 'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M'),
-                'tema': actividad.nombre,
+                'tema': tema.tema if tema.tema != 'otro' else tema.glosa_otro,
                 'comuna': comuna.nombre,
                 'foto': foto.ruta_archivo
             })
@@ -37,12 +38,14 @@ def index():
 @app.route('/agregar-actividad', methods=['GET', 'POST'])
 def agregar_actividad():
     if request.method == 'POST':
-        region = request.form.get('region')
         comuna = request.form.get('comuna')
         sector = request.form.get('sector')
         nombre = request.form.get('nombre')
         email = request.form.get('email')
-        red_social = request.form.get('contactarPor')
+        redes = request.form.getlist('red-social')
+        redes_sociales = []
+        for red in redes:
+            redes_sociales.append((red, request.form.get(red + "ID")))
         dia_hora_inicio = request.form.get('inicio')
         dia_hora_termino = request.form.get('termino')
         celular = request.form.get('celular')
@@ -75,6 +78,12 @@ def agregar_actividad():
         )
         actividad = db.get_actividades()[-1]  # Obtener la última actividad creada
 
+        db.create_actividad_tema(
+            tema=tema,
+            glosa_otro=otroTema if tema == 'otro' else None,
+            actividad_id=actividad.id
+        )
+
         for nombre_archivo, ruta_archivo in zip(nombre_fotos, ruta_fotos):
             db.create_foto(
                 ruta_archivo=ruta_archivo,
@@ -82,11 +91,12 @@ def agregar_actividad():
                 actividad_id=actividad.id
             )
 
-        db.create_actividad_tema(
-            tema=tema,
-            glosa_otro=otroTema if tema == 'otro' else None,
-            actividad_id=actividad.id
-        )
+        for red_social in redes_sociales:
+            db.create_contactar_por(
+                nombre=red_social[0],
+                identificador=red_social[1],
+                actividad_id=actividad.id
+            )
         return redirect(url_for('confirmacion'))
     elif request.method == 'GET':
         return render_template('agregar-actividad.html')
@@ -99,6 +109,7 @@ def actividades():
         data = []
         for actividad in actividades:
             comuna = db.get_comuna_by_id(actividad.comuna_id)
+            tema = db.get_tema_by_actividad_id(actividad.id)
             data.append({
                 'actividad_id': actividad.id,
                 'sector': actividad.sector,
@@ -107,8 +118,9 @@ def actividades():
                 'fecha_termino': actividad.dia_hora_termino.date(),
                 'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M'),
                 'nombre': actividad.nombre,
+                'tema': tema.tema if tema.tema != 'otro' else tema.glosa_otro,
                 'comuna': comuna.nombre,
-                "fotos": 0
+                "fotos": len(db.get_fotos_by_actividad_id(actividad.id))
             })
         return render_template('lista-actividades.html', data=data)
 
