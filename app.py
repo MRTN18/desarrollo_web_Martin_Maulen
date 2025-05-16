@@ -1,7 +1,10 @@
+import hashlib
 from flask import Flask, redirect, render_template, request, url_for
 from database import db
 from werkzeug.utils import secure_filename
 import os
+import filetype
+from utils.validations import validate_conf_img, validate_text_input, validate_email, validate_celular
 
 app = Flask(__name__)
 
@@ -51,21 +54,47 @@ def agregar_actividad():
         celular = request.form.get('celular')
         descripcion = request.form.get('descripcion')
         fotos = []
-        nombre_fotos = []
         ruta_fotos = []
         for i in range(0, 5):
             fotos.append(request.files.get('foto' + str(i + 1), ''))
-        for foto in fotos:
-            if foto and foto.filename != '':
-                filename = secure_filename(foto.filename)
-                nombre_sin_extension = os.path.splitext(filename)[0]
-                nombre_fotos.append(nombre_sin_extension)
-                ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                foto.save(ruta_archivo)
-                ruta_relativa = ruta_archivo.replace('static/', '', 1)
-                ruta_fotos.append(ruta_relativa)
         tema = request.form.get('tema')
         otroTema = request.form.get('inputOtroTema', '').strip()
+
+        if not (validate_text_input(descripcion) and validate_text_input(nombre) and validate_text_input(sector) and validate_text_input(otroTema)):
+            print("texto")
+            return render_template('agregar-actividad.html', error="Datos no válidos")
+        
+        if not validate_email(email):
+            print("email")
+            return render_template('agregar-actividad.html', error="Datos no válido")
+        
+        if celular:
+            if not validate_celular(celular):
+                print("celular")
+                return render_template('agregar-actividad.html', error="Datos no válidos")
+        
+        for red in redes_sociales:
+            if not validate_text_input(red[1]):
+                return render_template('agregar-actividad.html', error="Datos no válidos")
+            
+        new_filenames = []
+        for foto in fotos:
+            if foto and foto.filename != '':
+                if not validate_conf_img(foto):
+                    return render_template('agregar-actividad.html', error="Datos no válidos")
+                else:
+                    _filename = hashlib.sha256(
+                        secure_filename(foto.filename) # nombre del archivo
+                        .encode("utf-8") # encodear a bytes
+                        ).hexdigest()
+                    _extension = filetype.guess(foto).extension
+                    img_filename = f"{_filename}.{_extension}"
+                    new_filenames.append(img_filename)
+                    foto.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
+                    ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], img_filename)
+                    ruta_relativa = ruta_archivo.replace('static/', '', 1)
+                    ruta_fotos.append(ruta_relativa)
+            
         db.create_actividad(
             comuna=comuna,
             sector=sector,
@@ -84,7 +113,7 @@ def agregar_actividad():
             actividad_id=actividad.id
         )
 
-        for nombre_archivo, ruta_archivo in zip(nombre_fotos, ruta_fotos):
+        for nombre_archivo, ruta_archivo in zip(new_filenames, ruta_fotos):
             db.create_foto(
                 ruta_archivo=ruta_archivo,
                 nombre_archivo=nombre_archivo,

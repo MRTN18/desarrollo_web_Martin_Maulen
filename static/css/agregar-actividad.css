@@ -108,8 +108,17 @@ select {
     padding: 3px;
 }
 
+.texto {
+    font-size: 14px;
+}
+
 .error {
     display: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 18px;
 }
 
 #otraFoto {
