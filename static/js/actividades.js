@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalImg = document.createElement("img");
   const closeButton = document.createElement("button");
 
-  // Configuración del modal
   modal.style.position = "fixed";
   modal.style.top = "0";
   modal.style.left = "0";
@@ -18,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modalImg.style.width = "800px";
   modalImg.style.height = "600px";
+  modalImg.src = "init";
+  modalImg.alt = "Imagen de la actividad";
 
   closeButton.textContent = "X";
   closeButton.style.position = "absolute";

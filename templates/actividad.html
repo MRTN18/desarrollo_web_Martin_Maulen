@@ -61,15 +61,17 @@
         {% for data in data['redes_sociales'] %}
         <div class="red-social">
           {% if data.nombre == 'instagram' %}
-          <img src="{{ url_for('static', filename='image/instagram.png') }}" alt="instagram" width="20" height="20">
+            <img src="{{ url_for('static', filename='image/instagram.png') }}" alt="instagram" width="20" height="20">
           {% elif data.nombre == 'whatsapp' %}
-          <img src="{{ url_for('static', filename='image/whatsapp.png') }}" alt="whatsapp" width="20" height="20">
+            <img src="{{ url_for('static', filename='image/whatsapp.png') }}" alt="whatsapp" width="20" height="20">
           {% elif data.nombre == 'X' %}
-          <img src="{{ url_for('static', filename='image/X.png') }}" alt="X" width="20" height="20">
+            <img src="{{ url_for('static', filename='image/X.png') }}" alt="X" width="20" height="20">
           {% elif data.nombre == 'telegram' %}
-          <img src="{{ url_for('static', filename='image/telegram.png') }}" alt="telegram" width="20" height="20">
+            <img src="{{ url_for('static', filename='image/telegram.png') }}" alt="telegram" width="20" height="20">
           {% elif data.nombre == 'tiktok' %}
-          <img src="{{ url_for('static', filename='image/tiktok.png') }}" alt="tiktok" width="20" height="20">
+            <img src="{{ url_for('static', filename='image/tiktok.png') }}" alt="tiktok" width="20" height="20">
+          { % else % }
+            <p>No existe una red social para contactar</p>
           {% endif %}
           <p>{{ data.identificador }}</p>
         </div>
@@ -80,14 +82,18 @@
           <h2>Fotos</h2>
         </div>
         <div class="fotos-actividad">
-          {% for foto in data['fotos'] %}
-          <img
-            src="{{ url_for('static', filename=foto) }}"
-            alt="foto"
-            width="320"
-            height="240"
-          >
-          {% endfor %}
+          {% if data['fotos'] %}
+            {% for foto in data['fotos'] %}
+            <img
+              src="{{ url_for('static', filename=foto) }}"
+              alt="foto"
+              width="320"
+              height="240"
+            >
+            {% endfor %}
+          {% else %}
+          <p>No hay fotos disponible</p>
+          {% endif %}
         </div>
       </div>
       <div class="btns">
