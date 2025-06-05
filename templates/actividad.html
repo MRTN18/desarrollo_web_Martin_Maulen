@@ -2,11 +2,11 @@
 <html lang="es">
   <head>
     <title>{{ data["nombre"] }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/actividades.css') }}"
-    >
+    />
   </head>
   <body>
     <div class="card">
@@ -49,9 +49,9 @@
           <h2>Datos del organizador</h2>
         </div>
         <p>
-          Nombre: {{ data['nombre'] }} <br>
-          Correo: {{ data['email'] }} <br>
-          Teléfono: {{ data['celular'] }} <br>
+          Nombre: {{ data['nombre'] }} <br />
+          Correo: {{ data['email'] }} <br />
+          Teléfono: {{ data['celular'] }} <br />
         </p>
       </div>
       <div class="categoria">
@@ -61,17 +61,42 @@
         {% for data in data['redes_sociales'] %}
         <div class="red-social">
           {% if data.nombre == 'instagram' %}
-            <img src="{{ url_for('static', filename='image/instagram.png') }}" alt="instagram" width="20" height="20">
+          <img
+            src="{{ url_for('static', filename='image/instagram.png') }}"
+            alt="instagram"
+            width="20"
+            height="20"
+          />
           {% elif data.nombre == 'whatsapp' %}
-            <img src="{{ url_for('static', filename='image/whatsapp.png') }}" alt="whatsapp" width="20" height="20">
+          <img
+            src="{{ url_for('static', filename='image/whatsapp.png') }}"
+            alt="whatsapp"
+            width="20"
+            height="20"
+          />
           {% elif data.nombre == 'X' %}
-            <img src="{{ url_for('static', filename='image/X.png') }}" alt="X" width="20" height="20">
+          <img
+            src="{{ url_for('static', filename='image/X.png') }}"
+            alt="X"
+            width="20"
+            height="20"
+          />
           {% elif data.nombre == 'telegram' %}
-            <img src="{{ url_for('static', filename='image/telegram.png') }}" alt="telegram" width="20" height="20">
+          <img
+            src="{{ url_for('static', filename='image/telegram.png') }}"
+            alt="telegram"
+            width="20"
+            height="20"
+          />
           {% elif data.nombre == 'tiktok' %}
-            <img src="{{ url_for('static', filename='image/tiktok.png') }}" alt="tiktok" width="20" height="20">
+          <img
+            src="{{ url_for('static', filename='image/tiktok.png') }}"
+            alt="tiktok"
+            width="20"
+            height="20"
+          />
           { % else % }
-            <p>No existe una red social para contactar</p>
+          <p>No existe una red social para contactar</p>
           {% endif %}
           <p>{{ data.identificador }}</p>
         </div>
@@ -82,18 +107,69 @@
           <h2>Fotos</h2>
         </div>
         <div class="fotos-actividad">
-          {% if data['fotos'] %}
-            {% for foto in data['fotos'] %}
-            <img
-              src="{{ url_for('static', filename=foto) }}"
-              alt="foto"
-              width="320"
-              height="240"
-            >
-            {% endfor %}
-          {% else %}
+          {% if data['fotos'] %} {% for foto in data['fotos'] %}
+          <img
+            src="{{ url_for('static', filename=foto) }}"
+            alt="foto"
+            width="320"
+            height="240"
+          />
+          {% endfor %} {% else %}
           <p>No hay fotos disponible</p>
           {% endif %}
+        </div>
+      </div>
+      <div class="categoria">
+        <div class="subtitulo">
+          <h2>Comentarios</h2>
+        </div>
+        <div class="comentarios" id="comentarios">
+          <div class="comentario">
+            <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt,
+              quasi adipisci, ad libero placeat in velit qui omnis quas corporis
+              soluta reprehenderit voluptatem animi ullam. Quasi vero earum at
+              dignissimos.
+            </p>
+            <div>23-05-2025</div>
+          </div>
+        </div>
+        <div class="agregar-comentario" id="agregar-comentario">
+          <button>Agregar Comentario</button>
+        </div>
+        <div class="formulario-comentario" id="formulario-comentario">
+          <form method="post" id="formulario">
+            <div>
+              <h2>Nuevo Comentario:</h2>
+            </div>
+            <div class="input">
+              <label for="nombre">Nombre:</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                minlength="3"
+                maxlength="80"
+                required
+              />
+            </div>
+            <div class="input">
+              <label for="comentario">Comentario:</label>
+              <textarea
+                name="comentario"
+                id="comentario"
+                rows="4"
+                cols="50"
+                minlength="5"
+              ></textarea>
+            </div>
+          </form>
+          <div class="btn">
+            <button type="submit" id="crear-comentario">
+              Crear Comentario
+            </button>
+          </div>
         </div>
       </div>
       <div class="btns">

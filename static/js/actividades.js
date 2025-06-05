@@ -1,3 +1,40 @@
+const form = document.getElementById("formulario");
+const nombre = document.getElementById("nombre");
+const comentario = document.getElementById("comentario");
+const formulario_comentario = document.getElementById("formulario-comentario");
+const agregar_comentario = document.getElementById("agregar-comentario");
+
+function validarFormulario() {
+  if (nombre.value.trim() === "") {
+    alert("Por favor, ingresa tu nombre.");
+    return false;
+  }
+  if (comentario.value.trim() === "") {
+    alert("Por favor, escribe un comentario.");
+    return false;
+  }
+  if (nombre.value.length > 80 || nombre.value.length < 3) {
+    alert("El nombre debe tener entre 3 y 80 caracteres.");
+    return false;
+  }
+  if (comentario.value.length < 5) {
+    alert("El comentario debe tener al menos 5 caracteres.");
+    return false;
+  }
+  return true;
+}
+
+agregar_comentario.addEventListener("click", () => {
+  formulario_comentario.style.display = "flex";
+  agregar_comentario.style.display = "none";
+});
+
+document.getElementById("crear-comentario").addEventListener("click", () => {
+  if (validarFormulario()) {
+    form.submit();
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll(".fotos-actividad img");
   const modal = document.createElement("div");
@@ -46,3 +83,43 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
   });
 });
+
+fetch("http://127.0.0.1:5000/get-coments")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const url = window.location.href;
+    const actividadId = url.split("/").pop();
+    console.log(data);
+
+    const comentariosContainer = document.getElementById("comentarios");
+    data.forEach((comentario) => {
+      if (comentario.actividad_id === Number(actividadId)) {
+        const nuevo_comentario = document.createElement("div");
+        nuevo_comentario.className = "comentario";
+        const nombre = document.createElement("h3");
+        const comentarioTexto = document.createElement("p");
+        const fecha = document.createElement("div");
+
+        nombre.textContent = comentario.nombre;
+        comentarioTexto.textContent = comentario.texto;
+        fecha.textContent = new Date(comentario.fecha).toLocaleString();
+
+        nuevo_comentario.appendChild(nombre);
+        nuevo_comentario.appendChild(comentarioTexto);
+        nuevo_comentario.appendChild(fecha);
+        comentariosContainer.prepend(nuevo_comentario);
+      }
+    });
+  })
+  .catch((error) => {
+    console.error("Error al cargar los comentarios:", error);
+    const comentariosContainer = document.getElementById("comentarios");
+    const errorDiv = document.createElement("div");
+    errorDiv.textContent = "No se pudieron cargar los comentarios.";
+    comentariosContainer.appendChild(errorDiv);
+  });

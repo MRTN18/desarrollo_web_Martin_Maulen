@@ -155,7 +155,7 @@ def actividades():
             })
         return render_template('lista-actividades.html', data=data)
 
-@app.route('/actividades/<int:id>', methods=['GET'])
+@app.route('/actividades/<int:id>', methods=['GET', 'POST'])
 def actividad(id):
     if request.method == 'GET':
         actividad = db.get_actividad_by_id(id)
@@ -182,6 +182,16 @@ def actividad(id):
             'fotos': rutas_fotos,
         }
         return render_template('actividad.html', data=data)
+    elif request.method == 'POST':
+        nombre = request.form.get('nombre')
+        comentario = request.form.get('comentario')
+        db.create_comentario(
+            nombre=nombre,
+            comentario=comentario,
+            fecha=datetime.datetime.now(),
+            actividad_id=id
+        )
+        return redirect(url_for('actividad', id=id))
 
 @app.route('/estadisticas')
 def estadisticas():
@@ -249,7 +259,23 @@ def get_stats_activities():
                 'cantidad_mañana': cantidad_act_mañana,
                 'cantidad_tarde': cantidad_act_tarde,
                 'cantidad_noche': cantidad_act_noche
-            })    
+            })
+        return jsonify(data)
+
+@app.route('/get-coments', methods=['GET'])
+@cross_origin(origins="127.0.0.1", supports_credentials=True)
+def get_coments():
+    if request.method == 'GET':
+        data = []
+        comentarios = db.get_comentarios()
+        for com in comentarios:
+            actividad = db.get_actividad_by_id(com.actividad_id)
+            data.append({
+                'nombre': com.nombre,
+                'texto': com.texto,
+                'fecha': com.fecha.strftime('%Y-%m-%d %H:%M:%S'),
+                'actividad_id': actividad.id,
+            })
         return jsonify(data)
 
 @app.route('/confirmacion')

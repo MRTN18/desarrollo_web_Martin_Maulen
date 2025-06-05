@@ -1,7 +1,1 @@
-# Tarea 2
-
-En la portada para que aparezcan las 5 últimas actividades ingresadas es obtener de la base de datos las últimas 5 actividades, esta cosulta te devuelve una lista con estas actividades, para que aparezca como primera la última actividad agregada lo que hago es invertir esta lista y entregar cada valor con una fila de la tabla por medio de un for utlizando jinja en el HTML.
-
-Para la parte donde se crear una actividad nueva a partir de un form, en el backend obtengo toda la información de los inputs y luego la valido. En estas validaciones lo que reviso principalmente es que cosas como el email y el celular segan una estructura definida con un regex y que todas las entradas de texto que existen dentro del form se valide que no sea una inyección ya sea de código JavaScript, etiquetas de HTML, inyecciones SQL, etc. Para hacer esto lo que hice fue buscar patrones con los que se forman esta inyecciones y pregunto si alguno de los inputs contiene estos patrones, si lo tiene no se envia la data a la base de datos y se vuelve a renderizar el form vacío con un mensaje indicando que los datos ingresados no son válidos, si pasa las validaciones, entonces se guarda la data en la base de datos.
-
-Por último en la página de la lista de actividades donde se puede ingresar a una actividad en específico el paginamiento se hizo en JavaScript y se encuentra en el archivo actividades.js
+# Tarea 3

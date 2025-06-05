@@ -86,6 +86,14 @@ class ActividadTema(Base):
 
     actividad = relationship("Actividad", back_populates="temas")
 
+class Comentario(Base):
+    __tablename__ = "comentario"
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, server_default=func.now(), nullable=False)
+    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+
 # --- Consultas ---
 
 def get_regiones():
@@ -142,6 +150,12 @@ def get_redes_sociales_by_actividad_id(id):
     session.close()
     return redes_sociales
 
+def get_comentarios():
+    session = SessionLocal()
+    comentarios = session.query(Comentario).all()
+    session.close()
+    return comentarios
+
 def create_actividad(comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
     session = SessionLocal()
     new_actividad = Actividad(
@@ -188,5 +202,17 @@ def create_contactar_por(nombre, identificador, actividad_id):
         actividad_id=actividad_id
     )
     session.add(new_contactar_por)
+    session.commit()
+    session.close()
+
+def create_comentario(nombre, comentario, fecha, actividad_id):
+    session = SessionLocal()
+    new_comentario = Comentario(
+        nombre=nombre,
+        texto=comentario,
+        fecha=fecha,
+        actividad_id=actividad_id
+    )
+    session.add(new_comentario)
     session.commit()
     session.close()
