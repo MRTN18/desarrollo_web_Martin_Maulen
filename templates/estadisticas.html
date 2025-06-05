@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Estadisticas</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
-    >
+    />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
   </head>
   <body>
     <div class="card">
@@ -18,34 +19,18 @@
           <p>
             En este gráfico se muestra la cantidad de actividades por cada día.
           </p>
-          <img
-            src="/image/grafico_barras.png"
-            alt="Cantidad de usuarios por mes"
-            width="350"
-            height="200"
-          >
+          <div id="graph1"></div>
+        </div>
+        <div class="grafico">
+          <p>En este gráfico se muestra la cantidad de actividades por tipo.</p>
+          <div id="graph2"></div>
         </div>
         <div class="grafico">
           <p>
-            En este gráfico se muestra la cantidad de actividades por cada mes.
+            En este gráfico se muestra la cantidad de actividades por cada mes
+            divididas en la mañana, tarde y noche.
           </p>
-          <img
-            src="/image/grafico_torta.png"
-            alt="Cantidad de usuarios por mes"
-            width="300"
-            height="190"
-          >
-        </div>
-        <div class="grafico">
-          <p>
-            En este gráfico se muestra la cantidad de actividades por cada año.
-          </p>
-          <img
-            src="/image/grafico_3barras.png"
-            alt="Cantidad de usuarios por mes"
-            width="400"
-            height="210"
-          >
+          <div id="graph3"></div>
         </div>
       </div>
       <div class="btns">
@@ -53,4 +38,5 @@
       </div>
     </div>
   </body>
+  <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
 </html>

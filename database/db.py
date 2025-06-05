@@ -1,4 +1,5 @@
 from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, String, create_engine
+from sqlalchemy.sql import func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 
 
@@ -110,6 +111,18 @@ def get_actividad_by_id(id):
     actividad = session.query(Actividad).filter(Actividad.id == id).first()
     session.close()
     return actividad
+
+def get_actividades_by_date(start_date):
+    session = SessionLocal()
+    actividades = session.query(Actividad).filter(func.date(Actividad.dia_hora_inicio) == start_date.date()).all()
+    session.close()
+    return actividades
+
+def get_actividades_by_month(month):
+    session = SessionLocal()
+    actividades = session.query(Actividad).filter(func.month(Actividad.dia_hora_inicio) == month).all()
+    session.close()
+    return actividades
 
 def get_tema_by_actividad_id(id):
     session = SessionLocal()

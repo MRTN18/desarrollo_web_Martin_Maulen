@@ -1,5 +1,7 @@
+import datetime
 import hashlib
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, jsonify
+from flask_cors import cross_origin
 from database import db
 from werkzeug.utils import secure_filename
 import os
@@ -184,6 +186,71 @@ def actividad(id):
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
+
+@app.route('/get-stats-date', methods=['GET'])
+@cross_origin(origins="127.0.0.1", supports_credentials=True)
+def get_stats_dates():
+    if request.method == 'GET':
+        actividades = db.get_actividades()
+        data = []
+        for act in actividades:
+            cantidad_de_actividades = len(db.get_actividades_by_date(act.dia_hora_inicio))
+            data.append({
+                'fecha': act.dia_hora_inicio.date().strftime('%Y-%m-%d'),
+                'cantidad': cantidad_de_actividades
+            })
+        # quitar repetidos
+        data = list({v['fecha']: v for v in data}.values())
+        return jsonify(data)
+
+@app.route('/get-stats-type', methods=['GET'])
+@cross_origin(origins="127.0.0.1", supports_credentials=True)
+def get_stats_type():
+    if request.method == 'GET':
+        actividades = db.get_actividades()
+        data = [
+            {"tema": "otro", "cantidad": 0},
+            {"tema": "música", "cantidad": 0},
+            {"tema": "deporte", "cantidad": 0},
+            {"tema": "tecnología", "cantidad": 0},
+            {"tema": "comida", "cantidad": 0},
+            {"tema": "política", "cantidad": 0},
+            {"tema": "ciencias", "cantidad": 0},
+        ]
+        for act in actividades:
+            tema = db.get_tema_by_actividad_id(act.id)
+            for t in data:
+                if tema.tema == t['tema']:
+                    t['cantidad'] += 1  
+        return jsonify(data)
+
+@app.route('/get-stats-activities', methods=['GET'])
+@cross_origin(origins="127.0.0.1", supports_credentials=True)
+def get_stats_activities():
+    if request.method == 'GET':
+        actividades = db.get_actividades()
+        data = []
+        months = range(1, 13)
+        for month in months:
+            cantidad_act_mañana = 0
+            cantidad_act_tarde = 0
+            cantidad_act_noche = 0
+            for act in actividades:
+                if act.dia_hora_inicio.month == month:
+                    hora_inicio = act.dia_hora_inicio.time()
+                    if hora_inicio < datetime.time(12, 0):
+                        cantidad_act_mañana += 1
+                    elif hora_inicio < datetime.time(18, 0):
+                        cantidad_act_tarde += 1
+                    else:
+                        cantidad_act_noche += 1
+            data.append({
+                'mes': month,
+                'cantidad_mañana': cantidad_act_mañana,
+                'cantidad_tarde': cantidad_act_tarde,
+                'cantidad_noche': cantidad_act_noche
+            })    
+        return jsonify(data)
 
 @app.route('/confirmacion')
 def confirmacion():
