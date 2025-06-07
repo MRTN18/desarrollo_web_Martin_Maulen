@@ -63,16 +63,13 @@ def agregar_actividad():
         otroTema = request.form.get('inputOtroTema', '').strip()
 
         if not (validate_text_input(descripcion) and validate_text_input(nombre) and validate_text_input(sector) and validate_text_input(otroTema)):
-            print("texto")
             return render_template('agregar-actividad.html', error="Datos no válidos")
         
         if not validate_email(email):
-            print("email")
             return render_template('agregar-actividad.html', error="Datos no válido")
         
         if celular:
             if not validate_celular(celular):
-                print("celular")
                 return render_template('agregar-actividad.html', error="Datos no válidos")
         
         for red in redes_sociales:
@@ -157,6 +154,7 @@ def actividades():
 
 @app.route('/actividades/<int:id>', methods=['GET', 'POST'])
 def actividad(id):
+    data = {}
     if request.method == 'GET':
         actividad = db.get_actividad_by_id(id)
         comuna = db.get_comuna_by_id(actividad.comuna_id)
@@ -185,6 +183,10 @@ def actividad(id):
     elif request.method == 'POST':
         nombre = request.form.get('nombre')
         comentario = request.form.get('comentario')
+        error = ""
+        if not validate_text_input(nombre) or not validate_text_input(comentario):
+            error = "Datos no válidos"
+            return render_template("actividad.html", data=data, error=error)
         db.create_comentario(
             nombre=nombre,
             comentario=comentario,

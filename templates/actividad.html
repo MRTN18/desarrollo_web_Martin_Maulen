@@ -123,6 +123,9 @@
         <div class="subtitulo">
           <h2>Comentarios</h2>
         </div>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
         <div class="comentarios" id="comentarios"></div>
         <div class="agregar-comentario" id="agregar-comentario">
           <button>Agregar Comentario</button>
@@ -140,8 +143,10 @@
                 name="nombre"
                 minlength="3"
                 maxlength="80"
+                onchange="validarNombre()"
                 required
               />
+              <span class="error" id="errorNombre"></span>
             </div>
             <div class="input">
               <label for="comentario">Comentario:</label>
@@ -151,7 +156,10 @@
                 rows="4"
                 cols="50"
                 minlength="5"
+                onchange="validarComentario()"
+                required
               ></textarea>
+              <span class="error" id="errorComentario"></span>
             </div>
           </form>
           <div class="btn">

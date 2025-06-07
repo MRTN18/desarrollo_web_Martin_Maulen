@@ -3,25 +3,45 @@ const nombre = document.getElementById("nombre");
 const comentario = document.getElementById("comentario");
 const formulario_comentario = document.getElementById("formulario-comentario");
 const agregar_comentario = document.getElementById("agregar-comentario");
+const errorNombre = document.getElementById("errorNombre");
+const errorComentario = document.getElementById("errorComentario");
 
-function validarFormulario() {
+function validarNombre() {
   if (nombre.value.trim() === "") {
-    alert("Por favor, ingresa tu nombre.");
-    return false;
-  }
-  if (comentario.value.trim() === "") {
-    alert("Por favor, escribe un comentario.");
+    errorNombre.textContent = "El nombre es obligatorio.";
     return false;
   }
   if (nombre.value.length > 80 || nombre.value.length < 3) {
-    alert("El nombre debe tener entre 3 y 80 caracteres.");
+    errorNombre.textContent = "El nombre debe tener entre 3 y 80 caracteres.";
+    return false;
+  }
+  errorNombre.textContent = "";
+  return true;
+}
+
+function validarComentario() {
+  if (comentario.value.trim() === "") {
+    errorComentario.textContent = "El comentario es obligatorio.";
     return false;
   }
   if (comentario.value.length < 5) {
-    alert("El comentario debe tener al menos 5 caracteres.");
+    errorComentario.textContent =
+      "El comentario debe tener al menos 5 caracteres.";
     return false;
   }
+  errorComentario.textContent = "";
   return true;
+}
+
+function validarFormulario() {
+  const isNombreValido = validarNombre();
+  const isComentarioValido = validarComentario();
+
+  if (isNombreValido && isComentarioValido) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 agregar_comentario.addEventListener("click", () => {
