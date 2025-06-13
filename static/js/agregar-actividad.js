@@ -770,6 +770,22 @@ const validarTelefono = () => {
 };
 
 const validarFechas = () => {
+  if (horaTermino.value == "") {
+    horaInicio.style.borderColor = "";
+    horaInicio.style.borderRadius = "";
+    errorFecha.style.display = "none";
+    errorFecha.innerHTML = "";
+    return true;
+  }
+
+  if (horaInicio.value == "") {
+    horaInicio.style.borderColor = "red";
+    horaInicio.style.borderRadius = "2px";
+    errorFecha.style.display = "block";
+    errorFecha.innerText = "¡Debes ingresar una fecha de inicio!";
+    errorFecha.style.color = "red";
+    return false;
+  }
   if (horaInicio.value >= horaTermino.value) {
     horaInicio.style.borderColor = "red";
     horaInicio.style.borderRadius = "2px";
@@ -808,8 +824,7 @@ const validarRedSocial = () => {
     (X_checkbox.checked &&
       (X_input.value.length < 4 || X_input.value.length > 50)) ||
     (telegram_checkbox.checked &&
-      (telegram_input.value.length < 4 ||
-        telegram_input.value.length > 50)) ||
+      (telegram_input.value.length < 4 || telegram_input.value.length > 50)) ||
     (tiktok_checkbox.checked &&
       (tiktok_input.value.length < 4 || tiktok_input.value.length > 50))
   ) {

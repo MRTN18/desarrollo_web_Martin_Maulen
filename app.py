@@ -29,11 +29,11 @@ def index():
             foto = db.get_fotos_by_actividad_id(actividad.id)[0]
             tema = db.get_tema_by_actividad_id(actividad.id)
             data.append({
-                'sector': actividad.sector,
+                'sector': actividad.sector if actividad.sector else 'No especificado',
                 'fecha_inicio': actividad.dia_hora_inicio.date(),
                 'hora_inicio': actividad.dia_hora_inicio.time().strftime('%H:%M'),
-                'fecha_termino': actividad.dia_hora_termino.date(),
-                'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M'),
+                'fecha_termino': actividad.dia_hora_termino.date() if actividad.dia_hora_termino else 'No especificado',
+                'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M') if actividad.dia_hora_termino else '',
                 'tema': tema.tema if tema.tema != 'otro' else tema.glosa_otro,
                 'comuna': comuna.nombre,
                 'foto': foto.ruta_archivo
@@ -53,6 +53,8 @@ def agregar_actividad():
             redes_sociales.append((red, request.form.get(red + "ID")))
         dia_hora_inicio = request.form.get('inicio')
         dia_hora_termino = request.form.get('termino')
+        if dia_hora_termino == '':
+            dia_hora_termino = None
         celular = request.form.get('celular')
         descripcion = request.form.get('descripcion')
         fotos = []
@@ -62,7 +64,7 @@ def agregar_actividad():
         tema = request.form.get('tema')
         otroTema = request.form.get('inputOtroTema', '').strip()
 
-        if not (validate_text_input(descripcion) and validate_text_input(nombre) and validate_text_input(sector) and validate_text_input(otroTema)):
+        if not (validate_text_input(descripcion) and validate_text_input(nombre, 200) and validate_text_input(sector, 100) and validate_text_input(otroTema, 15, 3) and validate_text_input(email, 100)):
             return render_template('agregar-actividad.html', error="Datos no válidos")
         
         if not validate_email(email):
@@ -73,7 +75,7 @@ def agregar_actividad():
                 return render_template('agregar-actividad.html', error="Datos no válidos")
         
         for red in redes_sociales:
-            if not validate_text_input(red[1]):
+            if not validate_text_input(red[1], 50, 4):
                 return render_template('agregar-actividad.html', error="Datos no válidos")
             
         new_filenames = []
@@ -140,11 +142,11 @@ def actividades():
             tema = db.get_tema_by_actividad_id(actividad.id)
             data.append({
                 'actividad_id': actividad.id,
-                'sector': actividad.sector,
+                'sector': actividad.sector if actividad.sector else 'No especificado',
                 'fecha_inicio': actividad.dia_hora_inicio.date(),
                 'hora_inicio': actividad.dia_hora_inicio.time().strftime('%H:%M'),
-                'fecha_termino': actividad.dia_hora_termino.date(),
-                'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M'),
+                'fecha_termino': actividad.dia_hora_termino.date() if actividad.dia_hora_termino else 'No especificado',
+                'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M') if actividad.dia_hora_termino else '',
                 'nombre': actividad.nombre,
                 'tema': tema.tema if tema.tema != 'otro' else tema.glosa_otro,
                 'comuna': comuna.nombre,
@@ -155,8 +157,10 @@ def actividades():
 @app.route('/actividades/<int:id>', methods=['GET', 'POST'])
 def actividad(id):
     data = {}
+    actividad = db.get_actividad_by_id(id)
+    if not actividad:
+        return redirect(url_for('error'))
     if request.method == 'GET':
-        actividad = db.get_actividad_by_id(id)
         comuna = db.get_comuna_by_id(actividad.comuna_id)
         tema = db.get_tema_by_actividad_id(id)
         fotos = db.get_fotos_by_actividad_id(id)
@@ -165,11 +169,11 @@ def actividad(id):
         for i in fotos:
             rutas_fotos.append(i.ruta_archivo)
         data = {
-            'sector': actividad.sector,
+            'sector': actividad.sector if actividad.sector else 'No especificado',
             'fecha_inicio': actividad.dia_hora_inicio.date(),
             'hora_inicio': actividad.dia_hora_inicio.time().strftime('%H:%M'),
-            'fecha_termino': actividad.dia_hora_termino.date(),
-            'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M'),
+            'fecha_termino': actividad.dia_hora_termino.date() if actividad.dia_hora_termino else 'No especificado',
+            'hora_termino': actividad.dia_hora_termino.time().strftime('%H:%M') if actividad.dia_hora_termino else 'No especificado',
             'nombre': actividad.nombre,
             'email': actividad.email,
             'celular': actividad.celular,
@@ -283,6 +287,10 @@ def get_coments():
 @app.route('/confirmacion')
 def confirmacion():
     return render_template('confirmacion-agregar-tarea.html')
+
+@app.route('/error')
+def error():
+    return render_template('error.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

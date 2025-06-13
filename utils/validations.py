@@ -16,7 +16,7 @@ def validate_celular(celular):
     celular_regex = r'^\+\d{3}\.\d{8}$'
     return re.match(celular_regex, nuevo_celular) is not None
 
-def validate_text_input(text):
+def validate_text_input(text, max_length=1000, min_length=-1):
     prohibited_patterns = [
         r'<.*?>',  # Etiquetas HTML
         r'(?:--|;|/\*|\*/)',  # SQL Injection
@@ -29,6 +29,8 @@ def validate_text_input(text):
     for pattern in prohibited_patterns:
         if re.search(pattern, text, re.IGNORECASE):
             return False
+    if len(text) > max_length or len(text) < min_length:
+        return False
     return True
 
 def validate_conf_img(img):
