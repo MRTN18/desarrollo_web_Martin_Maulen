@@ -22,7 +22,7 @@
               <th>Nota</th>
               <th></th>
             </tr>
-            <tr th:each="actividad, stat : ${data}">
+            <tr th:each="actividad, stat : ${data}" class="actividad-row">
               <td th:text="${actividad.id}"></td>
               <td th:text="${actividad.fecha_inicio}"></td>
               <td>
@@ -35,7 +35,7 @@
               </td>
               <td th:text="${actividad.nombre}"></td>
               <td th:text="${actividad.tema}"></td>
-              <td>--</td>
+              <td th:id="nota-promedio- + ${stat.index}">--</td>
               <td>
                 <button class="evaluar" th:id="evaluar + ${stat.index}" th:onclick="'evaluar(' + ${stat.index} + ')'">evaluar</button>
                 <form method="post" th:id="form + ${stat.index}" th:action="@{/post-nota}">
