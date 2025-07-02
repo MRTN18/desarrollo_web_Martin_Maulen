@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import tarea4.tarea4.models.Actividad;
 import tarea4.tarea4.models.ActividadRepository;
 import tarea4.tarea4.models.ActividadTema;
@@ -40,7 +38,6 @@ public class AppService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         for (Actividad act : actividades) {
             ActividadTema tema = actividadTemaRepository.findByActividadId(act.getId());
-            Nota nota = notaRepository.findByActividadId(act.getId());
             Map<String, String> actData = new HashMap<>();
             actData.put("id", act.getId().toString());
             actData.put("nombre", act.getNombre());
@@ -59,9 +56,20 @@ public class AppService {
             actData.put("descripcion", act.getDescripcion() != null ? act.getDescripcion() : "");
             actData.put("sector", act.getSector() != "" ? act.getSector() : "--");
             actData.put("tema", tema.getGlosa_otro() == null ? tema.getTema() : tema.getGlosa_otro());
-            actData.put("nota", nota != null ? nota.getNota() : "--");
             actividadesData.add(actData);
         }
         return actividadesData;
+    }
+
+    public void handlePostNota(Integer nota, Long actividad_id) throws Exception {
+        if (nota < 1 || nota > 7) {
+            throw new IllegalArgumentException("La nota debe estar entre 1 y 7");
+        }
+
+        Nota nuevaNota = new Nota(
+            actividad_id, 
+            nota);
+        
+        notaRepository.save(nuevaNota);
     }
 }

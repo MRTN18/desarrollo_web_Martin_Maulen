@@ -35,11 +35,12 @@
               </td>
               <td th:text="${actividad.nombre}"></td>
               <td th:text="${actividad.tema}"></td>
-              <td th:text="${actividad.nota}"></td>
+              <td>--</td>
               <td>
                 <button class="evaluar" th:id="evaluar + ${stat.index}" th:onclick="'evaluar(' + ${stat.index} + ')'">evaluar</button>
                 <form method="post" th:id="form + ${stat.index}" th:action="@{/post-nota}">
                   <input type="number" name="nota" min="1" max="7" step="1" class="nota" th:id="nota + ${stat.index}" th:onchange="'cambiarNota(' + ${stat.index} + ')'"/>
+                  <input type="hidden" th:id="actividad_id + ${stat.index}" name="actividad_id" th:value="${actividad.id}"/>
                   <button class="enviar" th:id="enviar + ${stat.index}">enviar</button>
                 </form>
               </td>

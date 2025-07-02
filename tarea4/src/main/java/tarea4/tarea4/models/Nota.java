@@ -29,13 +29,12 @@ public class Nota {
     private long actividad_id;
 
     @NotNull
-    private String nota;
+    private Integer nota;
 
     public Nota() {
     }
     
-    public Nota(Long id, long actividad_id, String nota) {
-        this.id = id;
+    public Nota(long actividad_id, Integer nota) {
         this.actividad_id = actividad_id;
         this.nota = nota;
     }
@@ -46,7 +45,7 @@ public class Nota {
     public long getActividad_id() {
         return actividad_id;
     }
-    public String getNota() {
+    public Integer getNota() {
         return nota;
     }
 }

@@ -25,9 +25,10 @@ public class AppController {
 
     @PostMapping("/post-nota")
     public String indexPostRoute(
-        @RequestParam("nota") Integer nota) throws Exception {
-        
-        System.out.println("Received POST request with nota: " + nota);
+        @RequestParam("nota") Integer nota,
+        @RequestParam("actividad_id") Long actividad_id) throws Exception {
+
+        appService.handlePostNota(nota, actividad_id);
         return "redirect:/";
     }
 }
