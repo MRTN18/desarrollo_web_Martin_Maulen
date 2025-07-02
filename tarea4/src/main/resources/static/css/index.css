@@ -1,0 +1,49 @@
+.card {
+    border: 1px solid black;
+    margin: 30px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.titulo {
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.table {
+    padding: 20px;
+    border-collapse: collapse;
+    display: table;
+}
+
+.table tr {
+    display: table-row;
+}   
+
+.table th, .table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    width: 150px
+}
+
+.header {
+    background-color: #d1d1d1;
+}
+
+.nota {
+    display: none;
+    width: 40%;
+}
+
+.enviar {
+    display: none;
+}
